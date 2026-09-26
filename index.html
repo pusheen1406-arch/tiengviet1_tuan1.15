@@ -52,9 +52,9 @@
         const { useState, useEffect, useRef } = React;
 
         const ADMIN_PASSWORD_DEFAULT = "2002";
-        const STORAGE_KEY_DATA = "tv1_review_app_data_v6";
-        const STORAGE_KEY_PASS = "tv1_review_admin_pass_v6";
-        const STORAGE_KEY_HISTORY = "tv1_review_history_v6";
+        const STORAGE_KEY_DATA = "tv1_review_app_data_v7";
+        const STORAGE_KEY_PASS = "tv1_review_admin_pass_v7";
+        const STORAGE_KEY_HISTORY = "tv1_review_history_v7";
 
         const cleanStr = (str) => str ? str.toLowerCase().replace(/[.,!?]/g, "").trim() : "";
 
@@ -127,7 +127,12 @@
 
         const rawPart1Database = allWords;
         const rawPart2Database = [...allSentences];
-        const rawPart3Database = allWords.map(w => w.word).concat([...allSentences]);
+        
+        // CẬP NHẬT: Loại bỏ từ đơn (1 từ), chỉ giữ lại từ đôi (chứa khoảng trắng) và câu cho Phần 3
+        const rawPart3Database = allWords
+            .filter(w => w.word.trim().includes(" "))
+            .map(w => w.word)
+            .concat([...allSentences]);
 
         const generateQuestionsList = (baseList, targetCount) => {
             let result = [...baseList];
